@@ -54,10 +54,7 @@ jobs:
     
     # Init with backend
     - name: Terraform Init
-      run: terraform init -migrate-state \
-        -backend-config="bucket=${{ secrets.AWS_BUCKET }} \
-        -backend-config="key=terraform.tfstate" \
-        -backend-config="region=us-east-1"
+      run: terraform init -migrate-state -backend-config="bucket=${{ secrets.AWS_BUCKET }}" -backend-config="key=terraform.tfstate" -backend-config="region=us-east-1"
 
     - name: Terraform Format
       run: terraform fmt -recursive -check
