@@ -54,13 +54,25 @@ jobs:
     
     # Init with backend
     - name: Terraform Init
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
       run: terraform init -migrate-state -backend-config="bucket=${{ secrets.AWS_BUCKET }}" -backend-config="key=terraform.tfstate" -backend-config="region=us-east-1"
 
     - name: Terraform Format
       run: terraform fmt -recursive -check
 
     - name: Terraform Plan
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
       run: terraform plan -input=false
 
     - name: Terraform Apply
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
       run: terraform apply -auto-approve -input=false
