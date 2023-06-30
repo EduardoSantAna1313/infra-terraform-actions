@@ -59,7 +59,7 @@ jobs:
       run: terraform init -backend-config="bucket=${{ secrets.AWS_BUCKET }}" -backend-config="key=terraform.tfstate" -backend-config="region=sa-east-1"
 
     - name: Terraform Format
-      run: terraform fmt -recursive -check
+      run: terraform fmt -check
 
     - name: Terraform Plan
       run: terraform plan -input=false

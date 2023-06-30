@@ -1,4 +1,4 @@
-provider "local" {}
+provider "local" { }
 
 terraform {
     # Config passada via terraform init
