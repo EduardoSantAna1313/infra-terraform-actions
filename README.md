@@ -1,2 +1,4 @@
-# infra-cluster-eks
-Cluster EKS com Terraform
+# infra-terraform-actions
+
+Projeto template de CI de infra com terraform via GithubActions.
+
