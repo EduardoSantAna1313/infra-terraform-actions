@@ -7,8 +7,9 @@ on:
 
 permissions:
   contents: read
+
 env:
-  AWS_REGION: sa-east-1                   # set this to your preferred AWS region, e.g. us-west-1
+  AWS_REGION: sa-east-1
     
 jobs:
   # AWS Configuration
@@ -43,25 +44,26 @@ jobs:
         shell: bash
 
     steps:
-    # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v3
 
-    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
       with:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-
+    
+    # Init with backend
     - name: Terraform Init
-      run: terraform init
+      run: terraform init -migrate-state \
+        -backend-config="bucket=${{ secrets.AWS_BUCKET }} \
+        -backend-config="key=terraform.tfstate" \
+        -backend-config="region=us-east-1"
 
     - name: Terraform Format
-      run: terraform fmt -check
+      run: terraform fmt -recursive -check
 
     - name: Terraform Plan
       run: terraform plan -input=false
 
     - name: Terraform Apply
-      if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
       run: terraform apply -auto-approve -input=false
