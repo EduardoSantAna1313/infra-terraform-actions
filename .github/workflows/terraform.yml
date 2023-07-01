@@ -39,7 +39,7 @@ jobs:
     name: 'Terraform'
     runs-on: ubuntu-latest
     environment: production
-    needs: AWS
+    needs: aws
     
     defaults:
       run:
