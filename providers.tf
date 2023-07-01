@@ -1,6 +1,6 @@
-provider "local" { }
+provider "local" {}
 
 terraform {
-    # Config passada via terraform init
-    backend "s3" { }
+  # Config passada via terraform init
+  backend "s3" {}
 }
